@@ -24,5 +24,5 @@ export class ArgumentsEntity {
     counterargument_yt_link: string;
 
     @Column()
-    counterargument_variants: JSON
+    counterargument_variants: string;
 }

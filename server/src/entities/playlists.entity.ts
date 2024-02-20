@@ -15,5 +15,8 @@ export class PlaylistsEntity {
     generated_unique_link: string;
 
     @Column()
-    arguments_array: JSON
+    arguments_array: string;
+
+    @Column()
+    with_text: boolean;
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from '../static/img/logo.png';
 import backgroundImg from '../static/img/background.jpg';
+import ArgumentsList from "../components/ArgumentsList";
+import CommentForm from "../components/CommentForm";
 
 const Homepage = () => {
     return <div className={'container'}>
@@ -26,29 +28,10 @@ const Homepage = () => {
                 </div>
             </div>
 
-            <div className={'hero__content__right'}>
-                <h3 className={'hero__content__right__header'}>
-                    Generator odpowiedzi
-                </h3>
-
-                <textarea className={'hero__content__textarea'}
-                          placeholder={'Wklej komentarz antyfajerwerkowca...'}>
-
-                </textarea>
-                <button className={'btn btn--submit'}>
-                    Generuj
-                </button>
-                <button className={'btn--simple'}>
-                    Manualnie wskaż argumenty, do których chcesz się odnieść
-                </button>
-            </div>
+            <CommentForm />
         </div>
 
-        <div className={'section'}>
-            <h3 className={'section__header'}>
-                Zobacz nasze wszystkie odpowiedzi na argumenty antyfajerwerkowców
-            </h3>
-        </div>
+        <ArgumentsList />
     </div>
 };
 
