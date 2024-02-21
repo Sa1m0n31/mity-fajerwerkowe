@@ -1,23 +1,44 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import ReactSwitch from "react-switch";
+import copyIcon from '../static/img/copy.svg';
+import checkIcon from '../static/img/check-black.svg';
+import {togglePlaylistWithText, updatePlaylist} from "../helpers/api";
 
 const linkPrefix = 'http://localhost:3000/odpowiedz/';
 
-const ResponsePreview = ({fullResponse, shortResponse}) => {
+const ResponsePreview = ({playlistId, fullResponse, shortResponse}) => {
     const [recipientName, setRecipientName] = useState('');
     const [link, setLink] = useState('');
     const [visibleShort, setVisibleShort] = useState(true);
+    const [withText, setWithText] = useState(true);
+
+    const copiedNotice = useRef(null);
 
     useEffect(() => {
-        setLink(generateRandomString(16));
-    }, []);
+        if(playlistId > 0) {
+            const newLink = generateRandomString(16);
+            setLink(newLink);
+
+            updatePlaylist(playlistId, '', `${linkPrefix}${newLink}`);
+        }
+    }, [playlistId]);
+
+    useEffect(() => {
+        if(playlistId > 0) {
+            togglePlaylistWithText(playlistId, withText);
+        }
+    }, [withText, playlistId]);
 
     const toggleVisibleShort = () => {
         setVisibleShort(p => !p);
     }
 
+    const toggleWithText = () => {
+        setWithText(p => !p);
+    }
+
     const generateRandomString = (length) => {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
         for(let i=0; i<length; i++) {
             result += characters.charAt(Math.floor(Math.random() * characters.length));
@@ -26,10 +47,41 @@ const ResponsePreview = ({fullResponse, shortResponse}) => {
     }
 
     const regenerateLink = () => {
-        setLink(`${recipientName}_${generateRandomString(6)}`);
+        const newLink = `${recipientName}_${generateRandomString(6)}`;
+        setLink(newLink);
+
+        updatePlaylist(playlistId, recipientName, `${linkPrefix}${newLink}`)
+    }
+
+    const copyToClipboard = (content) => {
+        const input = document.createElement('textarea');
+        input.innerHTML = content;
+        document.body.appendChild(input);
+        input.select();
+        const result = document.execCommand('copy');
+        document.body.removeChild(input);
+
+        copiedAnimation();
+
+        return result;
+    }
+
+    const copiedAnimation = () => {
+        copiedNotice.current.style.opacity = '1';
+        copiedNotice.current.style.bottom = '35px';
+
+        setTimeout(() => {
+            copiedNotice.current.style.opacity = '0';
+            copiedNotice.current.style.bottom = '15px';
+        }, 2000);
     }
 
     return <div className={'preview w flex'}>
+        <p className={'copied'}
+           ref={copiedNotice}>
+            Skopiowano odpowiedź
+        </p>
+
         <div className={'preview__left'}>
             <h3 className={'preview__header'}>
                 Odpisz komentarzem
@@ -50,9 +102,17 @@ const ResponsePreview = ({fullResponse, shortResponse}) => {
                 </p>
             </div>
 
-            <div className={'preview__content'} dangerouslySetInnerHTML={{
-                __html: visibleShort ? shortResponse : fullResponse
-            }}></div>
+            <div className={'preview__contentWrapper'}>
+                <button className={'btn--copy center'}
+                        onClick={() => { copyToClipboard(visibleShort ? shortResponse : fullResponse); }}>
+                    <img className={'img'} src={copyIcon} alt={'kopiuj'} />
+                </button>
+
+                <div className={'preview__content'} dangerouslySetInnerHTML={{
+                    __html: visibleShort ? shortResponse : fullResponse
+                }}>
+                </div>
+            </div>
         </div>
         <div className={'preview__right'}>
             <h3 className={'preview__header'}>
@@ -75,11 +135,28 @@ const ResponsePreview = ({fullResponse, shortResponse}) => {
                 </button>
             </div>
 
-            <p className={'preview__content preview__content--link'}>
-                Przykro mi, ale siejesz dezinformację, nie mam czasu wdawać się w dyskusję, ale nie mogę też zostawić
-                tych kłamstw bez odpowiedzi - przygotowałem krótki film w odpowiedzi na Twój komentarz -
-                obejrzyj i nie pisz głupot: {linkPrefix}{link}
-            </p>
+            <label className={'preview__right__checkbox flex'}>
+                <button className={'btn--checkbox center'}
+                        onClick={toggleWithText}>
+                    {withText ? <img className={'img'} src={checkIcon} alt={'zalacz-odpowiedz-tekstowa'} /> : ''}
+                </button>
+                Załącz tekstową odpowiedź na docelowej stronie
+            </label>
+
+            <div className={'preview__contentWrapper'}>
+                <button className={'btn--copy center'}
+                        onClick={() => { copyToClipboard(`Przykro mi, ale siejesz dezinformację, nie mam czasu wdawać się w dyskusję, ale nie mogę też zostawić
+                    tych kłamstw bez odpowiedzi - przygotowałem krótki film w odpowiedzi na Twój komentarz -
+                    obejrzyj i nie pisz głupot: ${linkPrefix}${link}`); }}>
+                    <img className={'img'} src={copyIcon} alt={'kopiuj'} />
+                </button>
+
+                <p className={'preview__content preview__content--link'}>
+                    Przykro mi, ale siejesz dezinformację, nie mam czasu wdawać się w dyskusję, ale nie mogę też zostawić
+                    tych kłamstw bez odpowiedzi - przygotowałem krótki film w odpowiedzi na Twój komentarz -
+                    obejrzyj i nie pisz głupot: <a target={'_blank'} href={`${linkPrefix}${link}`}>{linkPrefix}{link}</a>
+                </p>
+            </div>
         </div>
     </div>
 };

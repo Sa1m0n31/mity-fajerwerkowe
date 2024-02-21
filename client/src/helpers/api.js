@@ -20,4 +20,24 @@ const getPlaylistByLink = (link) => {
     return axios.get(`/getPlaylistByLink/${link}`);
 }
 
-export { getAllArguments, findArgumentsInText, generateTextResponse, getPlaylistByLink }
+const togglePlaylistWithText = (id, withText) => {
+    return axios.post(`/toggleWithText`, {
+        id, withText
+    });
+}
+
+const updatePlaylist = (id, recipientName, link) => {
+    return axios.post(`/updatePlaylist`, {
+        id, recipientName,
+        link: link.split('/').slice(-1)[0]
+    });
+}
+
+const getFullTextResponse = (argumentsIds) => {
+    return axios.post('/getFullResponse', {
+        argumentsIds
+    });
+}
+
+export { getAllArguments, findArgumentsInText, generateTextResponse,
+    getPlaylistByLink, togglePlaylistWithText, updatePlaylist, getFullTextResponse }

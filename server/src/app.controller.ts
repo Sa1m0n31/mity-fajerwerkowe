@@ -32,4 +32,22 @@ export class AppController {
     const { argumentsIds } = body;
     return this.appService.generateResponse(argumentsIds);
   }
+
+  @Post('/getFullResponse')
+  async getFullResponse(@Body() body) {
+    const { argumentsIds } = body;
+    return this.appService.getFullResponse(argumentsIds);
+  }
+
+  @Post('/updatePlaylist')
+  async updatePlaylist(@Body() body) {
+    const { id, recipientName, link } = body;
+    return this.appService.updatePlaylist(id, recipientName, link);
+  }
+
+  @Post('/toggleWithText')
+  async toggleWithText(@Body() body) {
+    const { id, withText } = body;
+    return this.appService.toggleWithText(id, withText);
+  }
 }

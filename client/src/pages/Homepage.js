@@ -3,6 +3,8 @@ import logo from '../static/img/logo.png';
 import backgroundImg from '../static/img/background.jpg';
 import ArgumentsList from "../components/ArgumentsList";
 import CommentForm from "../components/CommentForm";
+import HomepageStaticContent from "../components/HomepageStaticContent";
+import Footer from "../components/Footer";
 
 const Homepage = () => {
     return <div className={'container'}>
@@ -32,6 +34,8 @@ const Homepage = () => {
         </div>
 
         <ArgumentsList />
+        <HomepageStaticContent />
+        <Footer />
     </div>
 };
 

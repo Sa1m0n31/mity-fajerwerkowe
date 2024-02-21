@@ -8,6 +8,7 @@ import ArgumentsFoundByAi from "../components/ArgumentsFoundByAi";
 import {generateTextResponse, getAllArguments} from "../helpers/api";
 import ResponsePreview from "../components/ResponsePreview";
 import {Rings} from "react-loader-spinner";
+import Footer from "../components/Footer";
 
 const ChooseArgumentsPage = () => {
     const [loading, setLoading] = useState(true);
@@ -19,6 +20,7 @@ const ChooseArgumentsPage = () => {
     const [shortResponse, setShortResponse] = useState('');
     const [fullResponse, setFullResponse] = useState('');
     const [error, setError] = useState('');
+    const [playlistId, setPlaylistId] = useState(-1);
 
     const loaderRef = useRef(null);
     const submitBtnRef = useRef(null);
@@ -89,8 +91,8 @@ const ChooseArgumentsPage = () => {
             setResponseGenerationLoading(true);
 
             const argumentsIds = argumentsSelected.map((item) => {
-                const argumentId = item;
-                return allArguments.find((item) => (item.id === argumentId))?.id;
+                const argumentIndex = item;
+                return allArguments.find((item, index) => (index === argumentIndex))?.id;
             }).filter((item) => (item));
 
             generateTextResponse(argumentsIds)
@@ -98,6 +100,7 @@ const ChooseArgumentsPage = () => {
                    if(res) {
                        setShortResponse(res.data.shortResponse);
                        setFullResponse(res.data.fullResponse);
+                       setPlaylistId(res.data.id);
                    }
                    else {
                        setError('Coś poszło nie tak... Prosimy spróbować później');
@@ -135,7 +138,8 @@ const ChooseArgumentsPage = () => {
                 </div>
             </div>
 
-            {fullResponse ? <ResponsePreview fullResponse={fullResponse}
+            {fullResponse ? <ResponsePreview playlistId={playlistId}
+                                             fullResponse={fullResponse}
                                              shortResponse={shortResponse} /> : <>
                 {argumentsFoundByAI.length ? <>
                     <ArgumentsFoundByAi argumentsIndexes={argumentsFoundByAI} />
@@ -174,6 +178,8 @@ const ChooseArgumentsPage = () => {
                 </div>
             </>}
         </div>
+
+        <Footer />
     </div>
 };
 
