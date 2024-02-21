@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {findArgumentsInText} from "../helpers/api";
 import { Rings } from "react-loader-spinner";
+import {ERROR_MESSAGE} from "../helpers/constans";
 
 const CommentForm = () => {
     const [comment, setComment] = useState('');
@@ -64,7 +65,7 @@ const CommentForm = () => {
                 })
                 .catch(() => {
                     setLoading(false);
-                    setError('Coś poszło nie tak. Prosimy spróbować później');
+                    setError(ERROR_MESSAGE);
                 })
         }
     }

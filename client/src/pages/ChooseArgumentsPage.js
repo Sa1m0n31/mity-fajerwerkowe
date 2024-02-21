@@ -9,6 +9,7 @@ import {generateTextResponse, getAllArguments} from "../helpers/api";
 import ResponsePreview from "../components/ResponsePreview";
 import {Rings} from "react-loader-spinner";
 import Footer from "../components/Footer";
+import {ERROR_MESSAGE} from "../helpers/constans";
 
 const ChooseArgumentsPage = () => {
     const [loading, setLoading] = useState(true);
@@ -103,7 +104,7 @@ const ChooseArgumentsPage = () => {
                        setPlaylistId(res.data.id);
                    }
                    else {
-                       setError('Coś poszło nie tak... Prosimy spróbować później');
+                       setError(ERROR_MESSAGE);
                    }
 
                    setResponseGenerationLoading(false);
@@ -111,7 +112,7 @@ const ChooseArgumentsPage = () => {
                 .catch((e) => {
                     console.log(e);
                     setResponseGenerationLoading(false);
-                    setError('Coś poszło nie tak... Prosimy spróbować później');
+                    setError(ERROR_MESSAGE);
                 });
         }
     }

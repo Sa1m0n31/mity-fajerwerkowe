@@ -101,27 +101,19 @@ export class AppService {
       return variants[Math.floor(Math.random() * variants.length)];
   }
 
-  async generateFullResponseFromArgumentsList(argumentsList) {
+  generateFullResponseFromArgumentsList(argumentsList) {
       return argumentsList.map((item, index, array) => {
           const variant = this.getRandomVariant(JSON.parse(item.counterargument_variants));
 
-          if(array.length === 1) {
+          if((array.length === 1) || (index === array.length - 1)) {
               const { full } = variant;
               return full;
           }
-          else if(index === 0) {
-              const { full, conjunction_after } = variant;
-              return `${full} ${conjunction_after}`
-          }
-          else if(index === array.length - 1) {
-              const { full, conjunction_before } = variant;
-              return `${conjunction_before} ${full}`;
-          }
           else {
-              const { full, conjunction_before, conjunction_after } = variant;
-              return `${conjunction_before} ${full} ${conjunction_after}`;
+              const { full } = variant;
+              return `${full}<br/><br/>`;
           }
-      }).join('. ');
+      }).join('');
   }
 
   async getFullResponse(argumentsIds) {

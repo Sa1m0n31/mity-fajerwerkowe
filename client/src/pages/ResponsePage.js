@@ -32,9 +32,11 @@ const ResponsePage = () => {
 
                     const obj = res.data;
 
-                    setArgumentsIds(JSON.parse(obj.arguments_array));
-                    setWithText(obj.with_text);
-                    setRecipientName(obj.recipient_name);
+                    if(obj) {
+                        setArgumentsIds(JSON.parse(obj.arguments_array));
+                        setWithText(obj.with_text);
+                        setRecipientName(obj.recipient_name);
+                    }
                 }
             });
     }, []);

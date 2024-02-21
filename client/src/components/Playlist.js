@@ -11,20 +11,18 @@ const Playlist = ({list}) => {
             </div>
         </div>
 
-        {list?.length > 1 ? <div className={'playlist__list'}>
+        {list?.length > 1 ? <div className={'playlist__list scroll'}>
             {list.map((item, index) => {
-                if(index !== currentIndex) {
-                    return <button className={'playlist__list__item flex'}
-                                   onClick={() => { setCurrentIndex(index); }}
-                                   key={index}>
-                        <figure className={'playlist__list__item__img'}>
-                            <img className={'img'} src={item.image} alt={item.title} />
-                        </figure>
-                        <h5 className={'playlist__list__item__title'}>
-                            {item.title}
-                        </h5>
-                    </button>
-                }
+                return <button className={`playlist__list__item ${index === currentIndex ? 'playlist__list__item--current' : ''} flex`}
+                               onClick={() => { setCurrentIndex(index); }}
+                               key={index}>
+                    <figure className={'playlist__list__item__img'}>
+                        <img className={'img'} src={item.image} alt={item.title} />
+                    </figure>
+                    <h5 className={'playlist__list__item__title'}>
+                        {item.title}
+                    </h5>
+                </button>
             })}
         </div> : ''}
     </div>
