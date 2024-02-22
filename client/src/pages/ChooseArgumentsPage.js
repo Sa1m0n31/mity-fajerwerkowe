@@ -10,6 +10,7 @@ import ResponsePreview from "../components/ResponsePreview";
 import {Rings} from "react-loader-spinner";
 import Footer from "../components/Footer";
 import {ERROR_MESSAGE} from "../helpers/constans";
+import {Helmet} from "react-helmet";
 
 const ChooseArgumentsPage = () => {
     const [loading, setLoading] = useState(true);
@@ -118,8 +119,12 @@ const ChooseArgumentsPage = () => {
     }
 
     return loading ? <LoadingPage /> : <div className={'container'}>
+        <Helmet>
+            <title>Mity fajerwerkowe</title>
+        </Helmet>
+
         <div className={'w'}>
-            <div className={'chooseArgumentsHeading'}>
+            <div className={`chooseArgumentsHeading ${fullResponse ? 'chooseArgumentsHeading--response' : ''}`}>
                 <div className={'backgroundOverlay'}></div>
                 <figure className={'background'}>
                     <img className={'background__img'} src={backgroundImg} alt={'mity-fajerwerkowe'} />

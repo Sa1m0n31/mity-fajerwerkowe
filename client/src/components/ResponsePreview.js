@@ -120,7 +120,7 @@ const ResponsePreview = ({playlistId, fullResponse, shortResponse}) => {
             </h3>
 
             <p className={'preview__right__text'}>
-                Wpisz imię osoby, której odpowiadasz - umieścimy je w linku, wtedy kliknie go na 100% :)
+                Wpisz imię osoby, której odpowiadasz - umieścimy je w linku, wtedy kliknie go na 100%
             </p>
 
             <div className={'preview__right__form flex'}>

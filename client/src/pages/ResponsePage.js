@@ -5,6 +5,7 @@ import logo from "../static/img/logo.png";
 import {getAllArguments, getFullTextResponse, getPlaylistByLink} from "../helpers/api";
 import Playlist from "../components/Playlist";
 import Footer from "../components/Footer";
+import {Helmet} from "react-helmet";
 
 const ResponsePage = () => {
     const [loading, setLoading] = useState(true);
@@ -68,9 +69,13 @@ const ResponsePage = () => {
         }
     }, [argumentsIds, withText]);
 
-    return loading ? <LoadingPage /> : <div className={'container'}>
+    return loading ? <LoadingPage /> : <div className={'container container--responsePage'}>
+        <Helmet>
+            <title>Mity fajerwerkowe</title>
+        </Helmet>
+
         <div className={'w'}>
-            <div className={'chooseArgumentsHeading'}>
+            <div className={`chooseArgumentsHeading`}>
                 <div className={'backgroundOverlay'}></div>
                 <figure className={'background'}>
                     <img className={'background__img'} src={backgroundImg} alt={'mity-fajerwerkowe'} />

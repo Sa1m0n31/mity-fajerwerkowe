@@ -8,7 +8,7 @@ const ChooseArgumentsHeader = ({continuation}) => {
     }
     else if(continuation === 1) {
         return <h1 className={'chooseArgumentsHeader'}>
-            Nasz system nie rozpoznał żadnych argumentów. Wybierz je manualnie z listy poniżej.
+            Nasz system nie rozpoznał żadnych argumentów. Wybierz je manualnie z listy
         </h1>
     }
     else if(continuation === 2) {

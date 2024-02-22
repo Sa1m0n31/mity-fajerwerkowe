@@ -39,12 +39,23 @@ export class AppService {
           const antiFireworksArguments = await this.getArgumentsNames();
 
           const completion = await openai.chat.completions.create({
-              messages: [{"role": "user", "content": `Oto lista argumentów antyfajerwerkowych: 
-              ${JSON.stringify(antiFireworksArguments)}. Oto komentarz antyfajerwerkowca: ${text}. Wskaż proszę,
-               które z argumentów podanych w tablicy zostały wymienione w podanym komentarzu. 
-               Odpowiedź podaj tylko jako tablicę [] z wymienionymi indeksami argumentów, które zostały poruszone. 
-               Indeksy numeruj od 0.`}],
-              model: "gpt-4",
+              messages: [
+                  {
+                      "role": "system",
+                      "content": `Otrzymasz listę argumentów antyfajerwerkowych oraz komentarz antyfajerwerkowca. Twoim
+                      zadaniem będzie zwrócić tablicę indeksów argumentów, które zostały wymienione w podanym komentarzu.
+                      Odpowiedź podaj tylko jako tablicę [] z wymienionymi indeksami argumentów, które zostały poruszone. 
+                      Indeksy numeruj od 0. Pamiętaj, że czasami komentarz może nie zawierać żadnych argumentów - 
+                      wówczas zwróć pustą tablicę. Pamiętaj, że jeśli komentarz będzie zawierał jakieś liczby to nie 
+                      oznacza to, że masz zwrócić te liczby - to nie ma związku z indeksami argumentów.`
+                  },
+                  {
+                      "role": "user",
+                      "content": `Oto lista argumentów antyfajerwerkowych: 
+                      ${JSON.stringify(antiFireworksArguments)}. Oto komentarz antyfajerwerkowca: ${text}.`
+                  }
+              ],
+              model: "gpt-3.5-turbo",
           });
 
           return completion.choices[0].message.content;
