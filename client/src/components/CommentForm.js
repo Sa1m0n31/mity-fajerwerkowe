@@ -63,7 +63,8 @@ const CommentForm = () => {
 
                     window.location.href = '/wybierz-argumenty';
                 })
-                .catch(() => {
+                .catch((err) => {
+                    console.log(err);
                     setLoading(false);
                     setError(ERROR_MESSAGE);
                 })

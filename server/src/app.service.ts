@@ -53,11 +53,17 @@ export class AppService {
                       "role": "user",
                       "content": `Oto lista argumentów antyfajerwerkowych: 
                       ${JSON.stringify(antiFireworksArguments)}. Oto komentarz antyfajerwerkowca: ${text}.`
+                  },
+                  {
+                      "role": "system",
+                      "content": "Pamiętaj aby zwrócić tylko tablicę z indeksami, bez żadnych dodatkowych treści. To bardzo ważne."
                   }
               ],
-              model: "gpt-3.5-turbo",
+              model: "gpt-4",
           });
 
+          console.log(text);
+          console.log(completion.choices[0].message.content);
           return completion.choices[0].message.content;
       }
       catch(e) {

@@ -4,7 +4,7 @@ import copyIcon from '../static/img/copy.svg';
 import checkIcon from '../static/img/check-black.svg';
 import {togglePlaylistWithText, updatePlaylist} from "../helpers/api";
 
-const linkPrefix = 'http://localhost:3000/odpowiedz/';
+const linkPrefix = 'https://test-mity.skylo-test3.pl/odpowiedz/';
 
 const ResponsePreview = ({playlistId, fullResponse, shortResponse}) => {
     const [recipientName, setRecipientName] = useState('');
