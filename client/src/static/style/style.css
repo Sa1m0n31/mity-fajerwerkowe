@@ -8,6 +8,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --primary: #201245;
     --secondary: #F8922E;
@@ -294,22 +298,25 @@ a {
 
 .chooseList__item,
 .arguments__item {
+    background: #fff;
     position: relative;
     width: 100%;
     height: auto;
     padding: 25px;
     border-radius: 20px;
+    border: 2px solid transparent;
+    transition: .05s all ease-in !important;
 }
 
 .arguments__item__img {
     width: 100%;
-    max-height: 200px;
+    max-height: 150px;
     overflow: hidden;
 }
 
 .arguments__item__title {
     margin: 20px 0;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
 }
 
@@ -320,13 +327,39 @@ a {
 
 .arguments__item__extract {
     font-size: 14px;
+    margin-top: -5px;
 }
 
 .btn--arguments {
-    width: 100%;
+    width: 38%;
     height: 40px;
     border-radius: 10px;
     margin-top: 20px;
+    font-size: 12px;
+}
+
+.btn--selectArgument {
+    height: 40px;
+    border-radius: 40px;
+    background: transparent;
+    border: 2px solid var(--light);
+    width: 55%;
+    margin-top: 20px;
+}
+
+.btn--selectArgument > .icon {
+    width: 20px;
+    height: auto;
+    margin-right: 5px;
+}
+
+.btn--selectArgument > .icon--cancel {
+    width: 15px;
+    margin-right: 10px;
+}
+
+.btn--selectArgument:hover {
+    background: #efefef;
 }
 
 .modal {
@@ -443,9 +476,9 @@ a {
 .arguments__item__badge {
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 10px;
     padding: 10px;
-    font-size: 14px;
+    font-size: 13px;
     background: var(--light);
     border-radius: 10px;
     z-index: 100;
@@ -491,17 +524,28 @@ a {
 }
 
 .chooseList__item {
+    padding: 5px 25px;
     background: transparent;
     position: relative;
     border: 2px solid transparent;
+    gap: 10%;
+    justify-content: flex-start;
 }
 
+.arguments__item:hover,
 .chooseList__item:hover {
-    transform: translateY(-5px);
+    background: #f9f9f9;
 }
 
 .chooseList__item--selected {
     border: 2px solid #00dd00;
+}
+
+.chooseList__item__image {
+    width: 90px;
+    height: 70px;
+    min-width: 90px;
+    min-height: 70px;
 }
 
 .chooseList__item__check {
@@ -515,7 +559,7 @@ a {
 .chooseList__item .arguments__item__title {
     font-weight: 500;
     font-size: 15px;
-    margin-bottom: -10px;
+    text-align: left;
 }
 
 .btn--submitBig {
@@ -706,6 +750,7 @@ a {
     font-size: 44px;
     text-align: center;
     margin: 20px auto;
+    max-width: 1000px;
 }
 
 .section__text {
@@ -868,6 +913,72 @@ a {
 .preview--response .preview__right {
     order: -1;
     margin-bottom: 50px;
+}
+
+.counter {
+    opacity: 0;
+    background: #fff;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    -webkit-box-shadow: 0px 0px 11px -3px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 11px -3px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 11px -3px rgba(66, 68, 90, 1);
+    padding: 20px;
+    border-radius: 25px;
+    z-index: 100;
+    transition: .6s opacity ease-in-out;
+}
+
+.counter__text {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.counter__text > span {
+    display: block;
+    text-align: center;
+    width: 30px;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--secondary);
+    padding-left: 8px;
+}
+
+.btn--counter {
+    margin-top: 20px;
+    width: 200px;
+    height: 40px;
+    border-radius: 40px;
+}
+
+.section__choice {
+    margin: 30px auto;
+    gap: 50px;
+}
+
+.btn--view {
+    background: transparent;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    opacity: .4;
+}
+
+.btn--view:hover {
+    background: transparent;
+    transform: translateY(-2px);
+}
+
+.btn--view--selected {
+    opacity: 1;
+}
+
+.btn--view > .img {
+    width: 20px;
+    height: auto;
 }
 
 @media(max-width: 1600px) {

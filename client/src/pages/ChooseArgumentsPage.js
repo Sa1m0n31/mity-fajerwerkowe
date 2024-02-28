@@ -49,32 +49,45 @@ const ChooseArgumentsPage = () => {
                     setAllArguments(res.data);
                 }
             });
-    }, []);
 
-    useEffect(() => {
-        const argumentsFound = localStorage.getItem('argumentsFound');
+        const argumentsSelectedAndReady = localStorage.getItem('argumentsSelectedAndReady');
 
-        if(argumentsFound !== null) {
-            localStorage.removeItem('argumentsFound');
+        if(argumentsSelectedAndReady) {
+            console.log(argumentsSelectedAndReady);
 
-            if(argumentsFound[0] === '[') {
-                const arr = JSON.parse(argumentsFound);
-                setArgumentsSelected(arr);
-                setArgumentsFoundByAI(arr);
+            localStorage.removeItem('argumentsSelectedAndReady');
 
-                if(arr.length) {
-                    setContinuation(2);
+            if(argumentsSelectedAndReady[0] === '[') {
+                const arr = JSON.parse(argumentsSelectedAndReady);
+
+                generateResponse(arr);
+            }
+        }
+        else {
+            const argumentsFound = localStorage.getItem('argumentsFound');
+
+            if(argumentsFound !== null) {
+                localStorage.removeItem('argumentsFound');
+
+                if(argumentsFound[0] === '[') {
+                    const arr = JSON.parse(argumentsFound);
+                    setArgumentsSelected(arr);
+                    setArgumentsFoundByAI(arr);
+
+                    if(arr.length) {
+                        setContinuation(2);
+                    }
+                    else {
+                        setContinuation(1);
+                    }
                 }
                 else {
                     setContinuation(1);
                 }
             }
-            else {
-                setContinuation(1);
-            }
-        }
 
-        setLoading(false);
+            setLoading(false);
+        }
     }, []);
 
     useEffect(() => {
@@ -88,11 +101,13 @@ const ChooseArgumentsPage = () => {
         setArgumentsFoundByAI([]);
     }
 
-    const generateResponse = () => {
-        if(argumentsSelected.length) {
+    const generateResponse = (argumentsSelectedProp = null) => {
+        const selectedArguments = argumentsSelectedProp ? argumentsSelectedProp : argumentsSelected;
+
+        if(selectedArguments.length) {
             setResponseGenerationLoading(true);
 
-            const argumentsIds = argumentsSelected.map((item) => {
+            const argumentsIds = argumentsSelectedProp ? selectedArguments : selectedArguments.map((item) => {
                 const argumentIndex = item;
                 return allArguments.find((item, index) => (index === argumentIndex))?.id;
             }).filter((item) => (item));
@@ -109,10 +124,12 @@ const ChooseArgumentsPage = () => {
                    }
 
                    setResponseGenerationLoading(false);
+                   setLoading(false);
                 })
                 .catch((e) => {
                     console.log(e);
                     setResponseGenerationLoading(false);
+                    setLoading(false);
                     setError(ERROR_MESSAGE);
                 });
         }

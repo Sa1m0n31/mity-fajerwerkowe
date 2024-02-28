@@ -15,12 +15,16 @@ const ChooseArgumentsList = ({allArguments, argumentsSelected, setArgumentsSelec
         {allArguments.map((item, index) => {
             const isItemSelected = argumentsSelected.includes(index);
 
-            return <button className={`chooseList__item ${isItemSelected ? 'chooseList__item--selected' : 'shadow'}`}
+            return <button className={`flex chooseList__item ${isItemSelected ? 'chooseList__item--selected' : 'shadow'}`}
                            onClick={() => { selectArgument(index); }}
                            key={index}>
                 {argumentsSelected.includes(index) ? <img className={'chooseList__item__check'}
                                                           src={checkIcon}
                                                           alt={'check'} /> : ''}
+
+                <figure className={'chooseList__item__image center'}>
+                    <img className={'img'} src={item.miniature_img} alt={item.miniature_title} />
+                </figure>
 
                 <h4 className={'arguments__item__title'}>
                     {item.name}

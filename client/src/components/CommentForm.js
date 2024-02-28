@@ -105,7 +105,8 @@ const CommentForm = () => {
             </p>}
         </div>
 
-        <a href={'/wybierz-argumenty'} className={'btn--simple'}>
+        <a href={'#lista-argumentow'}
+           className={'btn--simple'}>
             Manualnie wskaż argumenty, do których chcesz się odnieść
         </a>
     </div>

@@ -4,6 +4,7 @@ import HomepageStaticContent from "../components/HomepageStaticContent";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import {Helmet} from "react-helmet";
+import ArgumentsSelectedCounter from "../components/ArgumentsSelectedCounter";
 
 const Homepage = () => {
     return <div className={'container'}>
@@ -15,6 +16,8 @@ const Homepage = () => {
         <ArgumentsList />
         <HomepageStaticContent />
         <Footer />
+
+        <ArgumentsSelectedCounter />
     </div>
 };
 
