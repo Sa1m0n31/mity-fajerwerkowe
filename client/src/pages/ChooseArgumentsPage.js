@@ -100,7 +100,7 @@ const ChooseArgumentsPage = () => {
     }
 
     const generateResponse = (argumentsSelectedProp = null) => {
-        const selectedArguments = argumentsSelectedProp ? argumentsSelectedProp : argumentsSelected;
+        const selectedArguments = argumentsSelectedProp?.length ? argumentsSelectedProp : argumentsSelected;
 
         if(selectedArguments.length) {
             setResponseGenerationLoading(true);
