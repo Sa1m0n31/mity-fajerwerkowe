@@ -104,6 +104,8 @@ const ChooseArgumentsPage = () => {
     const generateResponse = (argumentsSelectedProp = null) => {
         const selectedArguments = argumentsSelectedProp?.length ? argumentsSelectedProp : argumentsSelected;
 
+        console.log(selectedArguments);
+
         if(selectedArguments.length) {
             setResponseGenerationLoading(true);
 

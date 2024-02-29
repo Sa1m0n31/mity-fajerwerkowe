@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {findArgumentsInText} from "../helpers/api";
+import {findArgumentsInText, getAllArguments} from "../helpers/api";
 import { Rings } from "react-loader-spinner";
 import {ERROR_MESSAGE} from "../helpers/constans";
 
@@ -58,10 +58,29 @@ const CommentForm = () => {
                         argumentsFound = res.data;
                     }
 
-                    localStorage.setItem('argumentsFound', JSON.stringify(argumentsFound));
-                    setLoading(false);
+                    getAllArguments()
+                        .then((res) => {
+                            if(res) {
+                                const allArguments = res.data;
+                                const argumentsIds = allArguments
+                                    .filter((item, index) => (argumentsFound.includes(index)))
+                                    .map((item) => (item.id));
 
-                    window.location.href = '/wybierz-argumenty';
+                                localStorage.setItem('argumentsFound', JSON.stringify(argumentsIds));
+                                setLoading(false);
+
+                                window.location.href = '/wybierz-argumenty';
+                            }
+                            else {
+                                setLoading(false);
+                                setError(ERROR_MESSAGE);
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            setLoading(false);
+                            setError(ERROR_MESSAGE);
+                        });
                 })
                 .catch((err) => {
                     console.log(err);
