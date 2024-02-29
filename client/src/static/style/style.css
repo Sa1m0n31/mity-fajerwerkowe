@@ -320,7 +320,7 @@ a {
     font-weight: 700;
 }
 
-.chooseList .arguments__item__title {
+.chooseList--small .arguments__item__title {
     margin-top: 0;
     margin-bottom: 0 !important;
 }
@@ -522,8 +522,14 @@ a {
     font-size: 24px;
 }
 
+.chooseListWrapper {
+    margin-top: 100px;
+    position: relative;
+    z-index: 20;
+}
+
 .chooseList {
-    margin-top: 120px;
+    margin-top: 80px;
     position: relative;
     z-index: 10;
 }
@@ -566,6 +572,12 @@ a {
     right: -25px;
     width: 50px;
     height: auto;
+}
+
+.chooseList__item__check--small {
+    width: 30px;
+    top: -15px;
+    right: -15px;
 }
 
 .chooseList__item .arguments__item__title {
@@ -952,6 +964,7 @@ a {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 270px;
 }
 
 .preview--response > * {
@@ -1029,6 +1042,27 @@ a {
     height: auto;
 }
 
+.chooseArgumentsHeading--responsePage {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.chooseArgumentsHeading--responsePage .background,
+.chooseArgumentsHeading--responsePage .backgroundOverlay {
+    height: 100%;
+}
+
+.chooseArgumentsHeader--responsePage {
+    position: relative;
+    z-index: 100;
+    color: #fff;
+    padding: 30px 0;
+    max-width: 850px;
+}
+
 @media(max-width: 1600px) {
     .hero__content > * {
         width: 52%;
@@ -1040,6 +1074,14 @@ a {
 }
 
 @media(max-width: 1400px) {
+    .chooseListWrapper {
+        margin-top: 20px;
+    }
+
+    .chooseListWrapper > .section__choice {
+        margin-bottom: 50px;
+    }
+
     .preview__header {
         font-size: 19px;
     }
@@ -1113,8 +1155,8 @@ a {
         height: 40px;
     }
 
-    .chooseArgumentsHeading .backgroundOverlay,
-    .chooseArgumentsHeading .background {
+    .chooseArgumentsHeading:not(.chooseArgumentsHeading--responsePage) .backgroundOverlay,
+    .chooseArgumentsHeading:not(.chooseArgumentsHeading--responsePage) .background {
         height: 280px;
     }
 
@@ -1144,6 +1186,10 @@ a {
 
     .arguments__item > .flex > *:first-child {
         margin-top: 20px;
+    }
+
+    .preview--response {
+        margin-top: 270px;
     }
 }
 
@@ -1189,6 +1235,14 @@ a {
         grid-gap: 30px;
         grid-template-columns: 1fr;
         justify-items: center;
+    }
+
+    .chooseList {
+        margin-top: 0;
+    }
+
+    .chooseListWrapper {
+        margin-top: 140px;
     }
 
     .section__header,
@@ -1315,13 +1369,9 @@ a {
         transform: translateY(220px);
     }
 
-    .chooseArgumentsHeading .backgroundOverlay,
-    .chooseArgumentsHeading .background {
+    .chooseArgumentsHeading:not(.chooseArgumentsHeading--responsePage) .backgroundOverlay,
+    .chooseArgumentsHeading:not(.chooseArgumentsHeading--responsePage) .background {
         height: 200px !important;
-    }
-
-    .chooseList {
-        margin-top: 120px;
     }
 
     .chooseArgumentsHeading .hero__content {
@@ -1348,11 +1398,16 @@ a {
     }
 
     .container--responsePage .preview--response {
-        margin-top: 120px;
+        margin-top: 150px;
     }
 
     .preview__content__link__text {
         font-size: 12px;
+    }
+
+    .chooseArgumentsHeader--responsePage {
+        margin-top: 0;
+        max-width: 90%;
     }
 }
 
@@ -1454,6 +1509,10 @@ a {
         margin: 40px auto;
     }
 
+    .container--responsePage .preview--response {
+        margin-top: 125px;
+    }
+
     .footer {
         padding-top: 10px;
         flex-direction: column;
@@ -1501,7 +1560,7 @@ a {
         margin-top: -70px;
     }
 
-    .chooseList {
+    .chooseListWrapper {
         margin-top: 170px;
     }
 
@@ -1570,8 +1629,8 @@ a {
         height: 250px !important;
     }
 
-    .chooseArgumentsHeading .backgroundOverlay,
-    .chooseArgumentsHeading .background {
+    .chooseArgumentsHeading:not(.chooseArgumentsHeading--responsePage) .backgroundOverlay,
+    .chooseArgumentsHeading:not(.chooseArgumentsHeading--responsePage) .background {
         height: 300px;
     }
 }

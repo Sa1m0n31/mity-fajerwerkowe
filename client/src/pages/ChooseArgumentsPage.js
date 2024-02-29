@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import LoadingPage from "../components/LoadingPage";
 import ChooseArgumentsHeader from "../components/ChooseArgumentsHeader";
 import ChooseArgumentsList from "../components/ChooseArgumentsList";
@@ -11,18 +11,20 @@ import {Rings} from "react-loader-spinner";
 import Footer from "../components/Footer";
 import {ERROR_MESSAGE} from "../helpers/constans";
 import {Helmet} from "react-helmet";
+import {ArgumentsContext} from "../App";
 
 const ChooseArgumentsPage = () => {
     const [loading, setLoading] = useState(true);
     const [responseGenerationLoading, setResponseGenerationLoading] = useState(false);
     const [continuation, setContinuation] = useState(0);
-    const [argumentsSelected, setArgumentsSelected] = useState([]);
     const [argumentsFoundByAI, setArgumentsFoundByAI] = useState([]);
     const [allArguments, setAllArguments] = useState([]);
     const [shortResponse, setShortResponse] = useState('');
     const [fullResponse, setFullResponse] = useState('');
     const [error, setError] = useState('');
     const [playlistId, setPlaylistId] = useState(-1);
+
+    const { argumentsSelected, setArgumentsSelected } = useContext(ArgumentsContext);
 
     const loaderRef = useRef(null);
     const submitBtnRef = useRef(null);
@@ -116,6 +118,8 @@ const ChooseArgumentsPage = () => {
                        setShortResponse(res.data.shortResponse);
                        setFullResponse(res.data.fullResponse);
                        setPlaylistId(res.data.id);
+
+                       localStorage.setItem('updateToken', res.data.updateToken);
                    }
                    else {
                        setError(ERROR_MESSAGE);

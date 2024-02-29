@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {ArgumentsEntity} from "./entities/arguments.entity";
 import {In, Repository} from "typeorm";
@@ -13,6 +13,15 @@ export class AppService {
       @InjectRepository(PlaylistsEntity)
       private readonly playlistsRepository: Repository<PlaylistsEntity>
   ) {
+  }
+
+  generateUpdateToken() {
+      const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for(let i=0; i<64; i++) {
+          result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
   }
 
   async getAllArguments() {
@@ -78,22 +87,37 @@ export class AppService {
           primary_unique_link: link,
           generated_unique_link: link,
           arguments_array: JSON.stringify(argumentsArray),
-          with_text: withText
+          with_text: withText,
+          update_token: this.generateUpdateToken()
       });
   }
 
-  async updatePlaylist(id, recipientName, link) {
-      return this.playlistsRepository
-          .createQueryBuilder()
-          .update({
-              recipient_name: recipientName,
-              primary_unique_link: link,
-              generated_unique_link: link
-          })
-          .where({
-              id
-          })
-          .execute();
+  async validateUpdateToken(id, token) {
+      const rows = await this.playlistsRepository.findBy({
+          id: id,
+          update_token: token
+      });
+
+      return rows.length;
+  }
+
+  async updatePlaylist(id, recipientName, link, updateToken) {
+      if(await this.validateUpdateToken(id, updateToken)) {
+          return this.playlistsRepository
+              .createQueryBuilder()
+              .update({
+                  recipient_name: recipientName,
+                  primary_unique_link: link,
+                  generated_unique_link: link
+              })
+              .where({
+                  id
+              })
+              .execute();
+      }
+      else {
+          throw new UnauthorizedException('Niepoprawny token aktualizacji');
+      }
   }
 
   async toggleWithText(id, withText) {
@@ -148,6 +172,7 @@ export class AppService {
 
       const insertedRow = await this.addPlaylist('', '', argumentsList.map((item) => (item.id)), true);
       const id = insertedRow.id;
+      const updateToken = insertedRow.update_token;
 
       const fullResponse = this.generateFullResponseFromArgumentsList(argumentsList);
 
@@ -175,7 +200,8 @@ export class AppService {
       return {
           fullResponse,
           shortResponse,
-          id
+          id,
+          updateToken
       }
   }
 }

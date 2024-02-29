@@ -41,8 +41,8 @@ export class AppController {
 
   @Post('/updatePlaylist')
   async updatePlaylist(@Body() body) {
-    const { id, recipientName, link } = body;
-    return this.appService.updatePlaylist(id, recipientName, link);
+    const { id, recipientName, link, updateToken } = body;
+    return this.appService.updatePlaylist(id, recipientName, link, updateToken);
   }
 
   @Post('/toggleWithText')

@@ -38,6 +38,9 @@ const ResponsePage = () => {
                         setWithText(obj.with_text);
                         setRecipientName(obj.recipient_name);
                     }
+                    else {
+                        window.location.href = '/';
+                    }
                 }
             });
     }, []);
@@ -75,28 +78,17 @@ const ResponsePage = () => {
         </Helmet>
 
         <div className={'w'}>
-            <div className={`chooseArgumentsHeading`}>
+            <div className={`chooseArgumentsHeading chooseArgumentsHeading--responsePage`}>
                 <div className={'backgroundOverlay'}></div>
                 <figure className={'background'}>
                     <img className={'background__img'} src={backgroundImg} alt={'mity-fajerwerkowe'} />
                 </figure>
-                <div className={'backgroundBottom'}></div>
 
-                <div className={'hero__content flex'}>
-                    <div className={'hero__content__left'}>
-                        <a href={'/'}
-                           className={'logo'}>
-                            <img className={'img'} src={logo} alt={'arka-fajerwerki'} />
-                        </a>
-                    </div>
-                    <div className={'hero__content__right'}>
-                        <h1 className={'chooseArgumentsHeader chooseArgumentsHeader--responsePage'}>
-                            {recipientName ? `${recipientName}, poniżej` : 'Poniżej'} playlista argumentów
-                            przez Ciebie poruszonych i odpowiedzi na nie - specjalnie
-                            przygotowana dla Ciebie:
-                        </h1>
-                    </div>
-                </div>
+                <h1 className={'chooseArgumentsHeader chooseArgumentsHeader--responsePage'}>
+                    {recipientName ? `${recipientName}, poniżej` : 'Poniżej'} playlista argumentów
+                    przez Ciebie poruszonych i odpowiedzi na nie - specjalnie
+                    przygotowana dla Ciebie:
+                </h1>
             </div>
 
             <div className={'preview preview--response flex'}>

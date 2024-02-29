@@ -19,4 +19,7 @@ export class PlaylistsEntity {
 
     @Column()
     with_text: boolean;
+
+    @Column()
+    update_token: string;
 }

@@ -27,9 +27,12 @@ const togglePlaylistWithText = (id, withText) => {
 }
 
 const updatePlaylist = (id, recipientName, link) => {
+    const updateToken = localStorage.getItem('updateToken');
+
     return axios.post(`/updatePlaylist`, {
         id, recipientName,
-        link: link.split('/').slice(-1)[0]
+        link: link.split('/').slice(-1)[0],
+        updateToken
     });
 }
 
