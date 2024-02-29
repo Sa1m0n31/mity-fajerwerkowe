@@ -19,11 +19,15 @@ const ArgumentsFoundByAi = ({argumentsIndexes}) => {
 
     return <div className={'chooseList chooseList--foundByAi'}>
         {allArguments.map((item, index) => {
-            return <button className={`chooseList__item chooseList__item--selected`}
+            return <button className={`flex chooseList__item chooseList__item--selected`}
                            key={index}>
                 <img className={'chooseList__item__check'}
                      src={checkIcon}
                      alt={'check'} />
+
+                <figure className={'chooseList__item__image center'}>
+                    <img className={'img'} src={item.miniature_img} alt={item.miniature_title} />
+                </figure>
 
                 <h4 className={'arguments__item__title'}>
                     {item.name}

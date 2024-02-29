@@ -116,6 +116,6 @@ const ResponsePage = () => {
 
         <Footer />
     </div>
-};
+}
 
 export default ResponsePage;

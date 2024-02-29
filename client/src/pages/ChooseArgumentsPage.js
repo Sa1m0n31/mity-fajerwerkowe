@@ -53,8 +53,6 @@ const ChooseArgumentsPage = () => {
         const argumentsSelectedAndReady = localStorage.getItem('argumentsSelectedAndReady');
 
         if(argumentsSelectedAndReady) {
-            console.log(argumentsSelectedAndReady);
-
             localStorage.removeItem('argumentsSelectedAndReady');
 
             if(argumentsSelectedAndReady[0] === '[') {

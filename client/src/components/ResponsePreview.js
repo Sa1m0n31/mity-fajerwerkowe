@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import ReactSwitch from "react-switch";
 import copyIcon from '../static/img/copy.svg';
 import checkIcon from '../static/img/check-black.svg';
+import linkIcon from '../static/img/link.svg';
 import {togglePlaylistWithText, updatePlaylist} from "../helpers/api";
 
 const linkPrefix = 'https://test-mity.skylo-test3.pl/odpowiedz/';
@@ -53,7 +54,7 @@ const ResponsePreview = ({playlistId, fullResponse, shortResponse}) => {
         updatePlaylist(playlistId, recipientName, `${linkPrefix}${newLink}`)
     }
 
-    const copyToClipboard = (content) => {
+    const copyToClipboard = (content, text = 'Skopiowano odpowiedź') => {
         const input = document.createElement('textarea');
         input.innerHTML = content;
         document.body.appendChild(input);
@@ -61,19 +62,27 @@ const ResponsePreview = ({playlistId, fullResponse, shortResponse}) => {
         const result = document.execCommand('copy');
         document.body.removeChild(input);
 
-        copiedAnimation();
+        copiedAnimation(text);
 
         return result;
     }
 
-    const copiedAnimation = () => {
-        copiedNotice.current.style.opacity = '1';
-        copiedNotice.current.style.bottom = '35px';
+    const copiedAnimation = (text) => {
+        copiedNotice.current.textContent = text;
 
         setTimeout(() => {
-            copiedNotice.current.style.opacity = '0';
-            copiedNotice.current.style.bottom = '15px';
-        }, 2000);
+            copiedNotice.current.style.opacity = '1';
+            copiedNotice.current.style.bottom = '35px';
+
+            setTimeout(() => {
+                copiedNotice.current.style.opacity = '0';
+                copiedNotice.current.style.bottom = '15px';
+            }, 2000);
+        }, 200);
+    }
+
+    const copyLink = () => {
+        copyToClipboard(`${linkPrefix}${link}`, 'Skopiowano link');
     }
 
     return <div className={'preview w flex'}>
@@ -154,11 +163,23 @@ const ResponsePreview = ({playlistId, fullResponse, shortResponse}) => {
                 <p className={'preview__content preview__content--link'}>
                     Przykro mi, ale siejesz dezinformację, nie mam czasu wdawać się w dyskusję, ale nie mogę też zostawić
                     tych kłamstw bez odpowiedzi - przygotowałem krótki film w odpowiedzi na Twój komentarz -
-                    obejrzyj i nie pisz głupot: <a target={'_blank'} href={`${linkPrefix}${link}`}>{linkPrefix}{link}</a>
+                    obejrzyj i nie pisz głupot:
+                    <span className={'preview__content__link flex'}>
+                        <span className={'preview__content__link__text'}>
+                            {linkPrefix}{link}
+                        </span>
+
+                        <a target={'_blank'} href={`${linkPrefix}${link}`} className={'preview__content__link__button center'}>
+                            <img className={'img'} src={linkIcon} alt={'link'} />
+                        </a>
+                        <button className={'preview__content__link__button center'} onClick={copyLink}>
+                            <img className={'img'} src={copyIcon} alt={'kopiuj'} />
+                        </button>
+                    </span>
                 </p>
             </div>
         </div>
     </div>
-};
+}
 
 export default ResponsePreview;

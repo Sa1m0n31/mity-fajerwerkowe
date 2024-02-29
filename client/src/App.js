@@ -4,26 +4,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import ChooseArgumentsPage from "./pages/ChooseArgumentsPage";
 import ResponsePage from "./pages/ResponsePage";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const ArgumentsContext = React.createContext([]);
 
 function App() {
   const [argumentsSelected, setArgumentsSelected] = useState([]);
-
-  useEffect(() => {
-    const argumentsSelectedCache = localStorage.getItem('argumentsSelected');
-
-    if(argumentsSelectedCache) {
-      setArgumentsSelected(JSON.parse(argumentsSelectedCache));
-    }
-  }, []);
-
-  useEffect(() => {
-    if(argumentsSelected) {
-      localStorage.setItem('argumentsSelected', JSON.stringify(argumentsSelected));
-    }
-  }, [argumentsSelected]);
 
   return <ArgumentsContext.Provider value={{
     argumentsSelected, setArgumentsSelected
